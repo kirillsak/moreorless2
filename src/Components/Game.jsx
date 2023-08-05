@@ -3,7 +3,8 @@ import { actors } from "../Constant/index";
 import GameOverModal from "./GameOverModal";
 import { Link } from "react-router-dom";
 
-const Game = ({ gameData }) => {
+const Game = ({ gameData, getRandomActors }) => {
+  /*
   const getRandomActors = () => {
     const actor1 = gameData[Math.floor(Math.random() * gameData.length)];
     let actor2 = actor1;
@@ -14,9 +15,9 @@ const Game = ({ gameData }) => {
     }
 
     return [actor1, actor2];
-  };
+  };*/
 
-  const [actorsPair, setActorsPair] = useState(getRandomActors);
+  const [actorsPair, setActorsPair] = useState(() => getRandomActors(gameData));
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -73,6 +74,7 @@ const Game = ({ gameData }) => {
       </Link>
       <GameOverModal isGameOver={isGameOver} playAgain={playAgain} />
       <div
+        data-testid="score"
         style={{
           textAlign: "center",
           fontWeight: "bold",
@@ -81,8 +83,8 @@ const Game = ({ gameData }) => {
           color: "#4A4A4A", // choose your desired color here
         }}
       >
-        score: <br />
-        {score}
+        <span>score:</span>
+        <span>{score}</span>
       </div>
 
       <div
@@ -186,6 +188,7 @@ const Game = ({ gameData }) => {
         </div>
       </div>
       <div
+        data-testid="high_score"
         style={{
           textAlign: "center",
           fontWeight: "bold",
@@ -194,7 +197,8 @@ const Game = ({ gameData }) => {
           color: "#4A4A4A", // choose your desired color here
         }}
       >
-        high score: {highScore}
+        <span>high score:</span>
+        <span>{highScore}</span>
       </div>
     </div>
   );
